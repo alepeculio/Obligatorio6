@@ -9,12 +9,8 @@ int KeyInt::getKeyInt() {
 }
 
 bool KeyInt::equals(IKey* clave) {
-    bool es = false;
-    KeyInt* c = dynamic_cast<KeyInt*>(clave);
-    if (c->getKeyInt() == this->getKeyInt()) {
-        es = true;
-    }
-    return es;
+    KeyInt* c = dynamic_cast<KeyInt*> (clave);
+    return c->getKeyInt() == this->getKeyInt();
 }
 
 KeyInt::~KeyInt() {
