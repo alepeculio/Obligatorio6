@@ -12,17 +12,14 @@ private:
     int numero;
 
 public:
-    DtDireccion(string,string,int);
+    DtDireccion(string, string, int);
     DtDireccion(DtDireccion*);
-    
+
     string getCiudad();
     string getCalle();
     int getNumero();
-        
-    ~DtDireccion();
 
+    ~DtDireccion();
 };
 
-
-#endif /* DTDIRECCION_H */
-
+#endif

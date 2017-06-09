@@ -12,16 +12,11 @@ private:
 public:
     Casa(float, int, int, int, int, bool, DtDireccion*, float, float, InmoProp*);
 
-    void setM2EspVerde(float); //Setter
+    void setM2EspVerde(float);
 
-    float getM2EspVerde(); //Getter
+    float getM2EspVerde();
 
     ~Casa();
-
-   
 };
 
-
-
-#endif /* CASA_H */
-
+#endif

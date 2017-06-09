@@ -29,6 +29,4 @@ public:
     ~DtPropiedad();
 };
 
-
-#endif /* DTPROPIEDAD_H */
-
+#endif

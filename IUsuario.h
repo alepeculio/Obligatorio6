@@ -3,12 +3,14 @@
 
 #include <string>
 #include <iostream>
+
+#include "IDictionary.h"
 using namespace std;
 
 class IUsuario {
 public:
     virtual int getCodigoUsuario() = 0;
-    /*Usuario*/ virtual void getUsuario() = 0;
+    virtual IDictionary* getUsuario() = 0;
     virtual void iniciarSesion(string) = 0;
     virtual void asignarSesion() = 0;
     virtual void primerContrasenia(string) = 0;

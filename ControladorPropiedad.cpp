@@ -1,10 +1,10 @@
 #include "ControladorPropiedad.h"
 
-/*Set (DtPropiedad)*/ void ControladorPropiedad::listarPropiedad(int codigo) {
+IDictionary* ControladorPropiedad::listarPropiedad(int codigo) {
 
 }
 
-/*Set (DtMensaje)*/ void ControladorPropiedad::listarMensajes(int codigo) {
+ICollection* ControladorPropiedad::listarMensajes(int codigo) {
 
 }
 
@@ -12,11 +12,11 @@ void ControladorPropiedad::ingresarMensaje(string texto, string aov) {
 
 }
 
-/*Set (DtDepartamento)*/ void ControladorPropiedad::listarDepartamentos() {
+IDictionary* ControladorPropiedad::listarDepartamentos() {
 
 }
 
-/*Set (DtZona)*/ void ControladorPropiedad::listarZonas(string nombreDep) {
+IDictionary* ControladorPropiedad::listarZonas(string nombreDep) {
 
 }
 
@@ -36,11 +36,11 @@ bool ControladorPropiedad::fijarVenta(float precioVenta) {
 
 }
 
-int ControladorPropiedad::altaApto(/*DtApartamento*/) {
+int ControladorPropiedad::altaApto(DtApartamento* dtApto) {
 
 }
 
-int ControladorPropiedad::altaCasa(/*DtCasa*/) {
+int ControladorPropiedad::altaCasa(DtCasa* dtCasa) {
 
 }
 

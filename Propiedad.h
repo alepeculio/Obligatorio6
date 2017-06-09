@@ -15,6 +15,7 @@ private:
     float m2Edificados;
     float m2Tot;
     InmoProp* inmoProp;
+
 public:
     Propiedad(int, int, int, int, bool, DtDireccion*, float, float, InmoProp*);
     virtual void setCodigo(int); //Setters
@@ -47,5 +48,4 @@ public:
 
 };
 
-#endif /* PROPIEDAD_H */
-
+#endif

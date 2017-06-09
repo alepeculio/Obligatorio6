@@ -12,14 +12,11 @@ private:
 public:
     Apartamento(int, int, int, int, int, bool, DtDireccion*, float, float, InmoProp*);
 
-    void setNum(int); //Setter
+    void setNum(int);
 
-    int getNum(); //Getter
+    int getNum();
 
     ~Apartamento();
-
 };
 
-
-#endif /* APARTAMENTO_H */
-
+#endif

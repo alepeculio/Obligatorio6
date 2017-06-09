@@ -26,5 +26,4 @@ public:
     ~Interesado();
 };
 
-#endif /* INTERESADO_H */
-
+#endif

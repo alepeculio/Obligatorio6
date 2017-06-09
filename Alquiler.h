@@ -17,9 +17,6 @@ public:
     int getPrecioA();
 
     ~Alquiler();
-
 };
 
-
-#endif /* ALQUILER_H */
-
+#endif

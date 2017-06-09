@@ -23,6 +23,4 @@ public:
 
 };
 
-
-#endif /* INMOBILIARIA_H */
-
+#endif

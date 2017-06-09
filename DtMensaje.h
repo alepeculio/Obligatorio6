@@ -24,10 +24,6 @@ public:
     bool getCliente();
 
     ~DtMensaje();
-
 };
 
-
-
-#endif /* DTMENSAJE_H */
-
+#endif

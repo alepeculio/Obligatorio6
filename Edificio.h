@@ -11,6 +11,7 @@ private:
     int cantPisos;
     float gastosComunes;
     ICollection* Apartamento;
+
 public:
     Edificio(string, int, float, ICollection*);
 
@@ -30,6 +31,4 @@ public:
     void eliminar(Propiedad*);
 };
 
-
-#endif /* EDIFICIO_H */
-
+#endif

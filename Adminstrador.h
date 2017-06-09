@@ -1,4 +1,3 @@
-
 #ifndef ADMINSITRADOR_H
 #define ADMINSITRADOR_H
 
@@ -14,8 +13,4 @@ public:
     ~Administrador();
 };
 
-
-#endif /* ADMINSITRADOR_H */
-
-
-// Comiteed
+#endif

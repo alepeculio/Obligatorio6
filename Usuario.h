@@ -1,4 +1,3 @@
-
 #ifndef USUARIO_H
 #define USUARIO_H
 
@@ -10,23 +9,21 @@ class Usuario : public ICollectible {
 private:
     string correo;
     string contrasenia;
+
 public:
-    Usuario(string,string);
-    
+    Usuario(string, string);
+
     virtual string getCorreo();
     virtual string getContrasenia();
 
     virtual void setCorreo(string);
     virtual void setContrasenia(string);
-    
+
     ~Usuario();
-    
-    virtual bool control(string); 
-    
+
+    virtual bool control(string);
+
 
 };
 
-
-
-#endif /* USUARIO_H */
-
+#endif

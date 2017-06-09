@@ -10,7 +10,6 @@ private:
     ICollection* chat;
 
 public:
-
     Aviso(ICollection*);
 
     virtual void setChat(ICollection*);
@@ -25,6 +24,4 @@ public:
     virtual string getTipo();
 };
 
-
-#endif /* AVISO_H */
-
+#endif

@@ -1,10 +1,3 @@
-/*
- * Lista.h
- *
- *  Created on: 8 de jun. de 2016
- *      Author: apias
- */
-
 #ifndef LISTA_H_
 #define LISTA_H_
 
@@ -12,20 +5,20 @@
 #include "Nodo.h"
 #include "ListaIterator.h"
 
-class Lista: public ICollection {
+class Lista : public ICollection {
 private:
-  Nodo *first;
+    Nodo *first;
 
 public:
-  Lista();
-  ~Lista();
+    Lista();
+    ~Lista();
 
-  void add(ICollectible *);
-  void remove(ICollectible *);
-  bool member(ICollectible *);
-  IIterator *iterator();
+    void add(ICollectible *);
+    void remove(ICollectible *);
+    bool member(ICollectible *);
+    IIterator *iterator();
 
-  bool isEmpty();
+    bool isEmpty();
 };
 
-#endif /* LISTA_H_ */
+#endif

@@ -9,7 +9,7 @@ using namespace std;
 class ControladorUsuario : public IUsuario {
 public:
     int getCodigoUsuario();
-    /*Usuario*/ void getUsuario();
+    IDictionary* getUsuario();
     void iniciarSesion(string);
     void asignarSesion();
     void primerContrasenia(string);

@@ -9,16 +9,14 @@ class DtZona {
 private:
     int codigo;
     string nombre;
-    
+
 public:
-    Dtzona(int,string);
-    
+    Dtzona(int, string);
+
     int getCodigo();
     string getNombre();
-    
+
     ~DtZona();
 };
 
-
-#endif /* DTZONA_H */
-
+#endif

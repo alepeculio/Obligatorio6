@@ -27,6 +27,4 @@ public:
     int getCodigoInter();
 };
 
-
-#endif /* CHAT_H */
-
+#endif

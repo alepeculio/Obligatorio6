@@ -1,19 +1,18 @@
 #ifndef DTHORA_H
 #define DTHORA_H
 
-class DtHora{
+class DtHora {
 private:
     int min;
     int hora;
-    
+
 public:
-    DtHora(int,int);
-    
+    DtHora(int, int);
+
     int getMin();
     int getHora();
-    
-   ~DtHora(); 
+
+    ~DtHora();
 };
 
-#endif /* DTHORA_H */
-
+#endif

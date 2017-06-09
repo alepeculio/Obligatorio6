@@ -30,6 +30,4 @@ public:
     void eliminar(Propiedad*);
 };
 
-
-#endif /* ZONA_H */
-
+#endif

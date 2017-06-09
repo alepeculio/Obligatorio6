@@ -4,7 +4,7 @@ int ControladorUsuario::getCodigoUsuario() {
 
 }
 
-/*Usuario*/ void ControladorUsuario::getUsuario() {
+IDictionary* ControladorUsuario::getUsuario() {
 
 }
 

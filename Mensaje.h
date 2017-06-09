@@ -13,6 +13,7 @@ private:
     DtHora* hora;
     string texto;
     bool cliente;
+
 public:
     Mensaje(DtFecha, DtHora, string, bool);
 
@@ -31,6 +32,4 @@ public:
     DtMensaje* getDatos(); //op propias
 };
 
-
-#endif /* MENSAJE_H */
-
+#endif

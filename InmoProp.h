@@ -6,29 +6,27 @@
 #include <iostream>
 using namespace std;
 
-class InmoProp{
+class InmoProp {
 private:
     Inmobiliaria* inmobiliaria;
     ICollection* aviso;
 public:
     InmoProp(Inmobiliaria*);
-    
+
     void setInmobiliaria(Inmobiliaria*);
     void setAvisos(ICollection);
-    
+
     Inmobiliaria* getInmobiliaria();
     ICollection* getAvisos();
-    
+
     ~InmoProp();
-    
+
     ICollection* getMensajes(int);
-    void ingresarMensaje(string,string,int);
+    void ingresarMensaje(string, string, int);
     void setAlquiler(float);
     void setVenta(float);
     void borrarLinkInmoProp();
 
-}
+};
 
-
-#endif /* INMOPROP_H */
-
+#endif
