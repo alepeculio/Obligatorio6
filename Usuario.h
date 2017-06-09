@@ -1,6 +1,7 @@
 #ifndef USUARIO_H
 #define USUARIO_H
 
+#include "ICollectible.h"
 #include <string>
 #include <iostream>
 using namespace std;
@@ -22,8 +23,6 @@ public:
     ~Usuario();
 
     virtual bool control(string);
-
-
 };
 
 #endif
