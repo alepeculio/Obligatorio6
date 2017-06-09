@@ -1,6 +1,7 @@
 #ifndef DTINMOPROP_H
 #define DTINMOPROP_H
 
+#include "DtDireccion.h"
 #include <string>
 #include <iostream>
 using namespace std;

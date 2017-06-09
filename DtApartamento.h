@@ -1,34 +1,19 @@
 #ifndef DTAPARTAMENTO_H
 #define DTAPARTAMENTO_H
 
-class DtApartamento {
+#include "DtDireccion.h"
+#include "DtPropiedad.h"
+
+class DtApartamento : public DtPropiedad {
 private:
-    int codigo;
     int num;
-    int cantAmb;
-    int cantDorm;
-    int cantBanios;
-    bool garage;
-    DtDireccion* direccion;
-    float m2Edificados;
-    float m2Tot;
-    InmoProp* inmoProp;
+
 public:
-    DtCasa(int, int, int, int, int, bool, DtDireccion*, float, float, InmoProp*);
+    DtApartamento(int, int, int, int, bool, DtDireccion*, float, float, int);
 
-    int getCodigo();
     int getNum();
-    int getCantAmb();
-    int getCantDorm();
-    int getCantBanios();
-    bool getGarage();
-    DtDireccion* getDireccion();
-    float getM2Edificados();
-    float getM2Tot() = 0;
-    InmoProp* getInmoProp();
 
-    ~DtCasa();
+    ~DtApartamento();
 };
 
-#endif /* DTAPARTAMENTO_H */
-
+#endif

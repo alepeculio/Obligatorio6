@@ -13,6 +13,7 @@ private:
     DtDireccion* direccion;
     float m2Edificados;
     float m2Tot;
+
 public:
     DtPropiedad(int, int, int, int, bool, DtDireccion*, float, float);
 
