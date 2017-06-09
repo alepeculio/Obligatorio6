@@ -1,4 +1,14 @@
 #include "ControladorPropiedad.h"
+#include "IDictionary.h"
+#include "ICollection.h"
+#include "IIterator.h"
+#include "ListDiccIterator.h"
+#include "ListDiccIteratorObj.h"
+#include "ICollectible.h"
+#include "ListDicc.h"
+#include "IKey.h"
+#include "Lista.h"
+#include "Departamento.h"
 
 IDictionary* ControladorPropiedad::listarPropiedad(int codigo) {
 
@@ -12,11 +22,21 @@ void ControladorPropiedad::ingresarMensaje(string texto, string aov) {
 
 }
 
-IDictionary* ControladorPropiedad::listarDepartamentos() {
+ICollection* ControladorPropiedad::listarDepartamentos() {
+    IIterator* iter = departamentos->getIteratorObj();
+    ICollection* res = new Lista();
+    while (iter->hasNext()) {
+        Departamento* dep = dynamic_cast<Departamento*> (iter->getCurrent());
+        ICollectible* dtdep = dep->getDatos();
+        res->add(dtdep);
+        iter->next();
+    }
 
+    delete iter;
+    return res;
 }
 
-IDictionary* ControladorPropiedad::listarZonas(string nombreDep) {
+ICollection* ControladorPropiedad::listarZonas(string nombreDep) {
 
 }
 

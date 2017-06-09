@@ -1,7 +1,8 @@
-#ifndef _COLLECTION_H_
-#define _COLLECTION_H_
-#include <string>
+#ifndef COLLECTION_H
+#define COLLECTION_H
 
+
+#include <string>
 #include "IIterator.h"
 #include "ICollectible.h"
 using namespace std;

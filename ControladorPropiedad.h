@@ -11,12 +11,24 @@
 using namespace std;
 
 class ControladorPropiedad : public IPropiedad {
+private:
+    IDictionary* departamentos;
+    IDictionary* edificios;
 public:
+    ControladorPropiedad(IDictionary*, IDictionary*);
+
+    void setDepartamentos(IDictionary*);
+    void setEdificios(IDictionary*);
+
+    IDictionary* getDepartamentos();
+    IDictionary* getEdificios();
+
+
     IDictionary* listarPropiedad(int);
     ICollection* listarMensajes(int);
     void ingresarMensaje(string, string);
-    IDictionary* listarDepartamentos();
-    IDictionary* listarZonas(string);
+    ICollection* listarDepartamentos();
+    ICollection* listarZonas(string);
     void selectZona(int);
     void selectEdificio(string);
     bool fijarAlquiler(float);

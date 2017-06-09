@@ -7,7 +7,7 @@
 #include "ICollectible.h"
 using namespace std;
 
-class DtDepartamento {
+class DtDepartamento : public ICollectible {
 private:
     char letra;
     string matricula;

@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 
+
 #include "IDictionary.h"
 #include "ICollection.h"
 #include "DtApartamento.h"
@@ -15,8 +16,8 @@ public:
     virtual IDictionary* listarPropiedad(int) = 0;
     virtual ICollection* listarMensajes(int) = 0;
     virtual void ingresarMensaje(string, string) = 0;
-    virtual IDictionary* listarDepartamentos() = 0;
-    virtual IDictionary* listarZonas(string) = 0;
+    virtual ICollection* listarDepartamentos() = 0;
+    virtual ICollection* listarZonas(string) = 0;
     virtual void selectZona(int) = 0;
     virtual void selectEdificio(string) = 0;
     virtual bool fijarAlquiler(float) = 0;
