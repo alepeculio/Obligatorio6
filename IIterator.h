@@ -1,5 +1,12 @@
-#ifndef IITERATOR_H
-#define IITERATOR_H
+/*
+ * IIterator.h
+ *
+ *  Created on: 8 de jun. de 2016
+ *      Author: apias
+ */
+
+#ifndef IIterator_H_
+#define IIterator_H_
 
 #include "ICollectible.h"
 
@@ -11,7 +18,4 @@ public:
   virtual void remove() = 0;
 };
 
-
-
-#endif /* IITERATOR_H */
-
+#endif /* IIterator_H_ */
