@@ -1,0 +1,18 @@
+#include "DtZona.h"
+
+DtZona::Dtzona(int codigo, string nombre) {
+    this->codigo = codigo;
+    this->nombre = nombre;
+}
+
+int DtZona::getCodigo() {
+    return this->codigo;
+}
+
+string DtZona::getNombre() {
+    return this->nombre;
+}
+
+DtZona::~DtZona() {
+
+}
