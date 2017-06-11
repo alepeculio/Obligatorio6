@@ -13,13 +13,13 @@ private:
     int edad;
 
 public:
-    Interesado(string, string, int, string, string);
+    Interesado(string, int, string, string);
 
-    void setNombre(string); //Setters
+    void setNombre(string);
     void setApellido(string);
     void setEdad(int);
 
-    string getNombre(); //Getters
+    string getNombre();
     string getApellido();
     int getEdad();
 

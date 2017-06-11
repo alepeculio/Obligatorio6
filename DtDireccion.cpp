@@ -9,11 +9,12 @@ DtDireccion::DtDireccion(string ciudad, string calle, int numero) {
     this->numero = numero;
 }
 
-DtDireccion :: DtDireccion(DtDireccion* d){
+DtDireccion::DtDireccion(DtDireccion* d) {
     this->ciudad = d->ciudad;
     this->calle = d->calle;
     this->numero = d->numero;
 }
+
 string DtDireccion::getCiudad() {
     return this->ciudad;
 }
