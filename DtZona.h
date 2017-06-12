@@ -11,7 +11,7 @@ private:
     string nombre;
 
 public:
-    Dtzona(int, string);
+    DtZona(int, string);
 
     int getCodigo();
     string getNombre();

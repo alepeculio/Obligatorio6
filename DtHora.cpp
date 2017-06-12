@@ -13,4 +13,10 @@ int DtHora::getHora() {
     return this->hora;
 }
 
-DtHora ::~DtHora(){}
+ostream& operator<<(ostream& os, const DtHora& hora) {
+    os << hora.min << ":" << hora.hora;
+    return os;
+}
+
+DtHora::~DtHora() {
+}

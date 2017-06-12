@@ -15,32 +15,31 @@ private:
     IDictionary* usuarios;
     Usuario* usuarioActual;
     Usuario* usuarioRecordado;
-    string emailRecordado;
     string primerCont;
 
 public:
     ControladorUsuario();
 
-    int getCodigoUsuario();
-    TipoUsuario getTipoUsuario();
-    TipoUsuario getTipoUsuarioRecordado();
-    bool esUsuarioNuevo();
-
     void iniciarSesion(string);
     bool ingresarContrasenia(string);
     void asignarSesion();
+    bool esUsuarioNuevo();
     void primerContrasenia(string);
     bool verificarContrasenia(string);
     void activarUsuario();
-
     void cerrarSesion();
-
-    void ingresarAdministrador(string, string);
     void ingresarInmobiliaria(string, DtDireccion*, string);
     void ingresarInteresado(string, string, int, string);
 
     DtInmobiliaria* mostrarInmobiliaria();
     int cantPorZonaYdep();
+
+    void ingresarAdministrador(string, string);
+    Usuario* getUsuarioActual();
+
+    int getCodigoUsuario();
+    TipoUsuario getTipoUsuario();
+    TipoUsuario getTipoUsuarioRecordado();
 
     ~ControladorUsuario();
 };

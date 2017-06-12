@@ -12,6 +12,67 @@ ControladorUsuario::ControladorUsuario() {
     this->usuarioRecordado = NULL;
 }
 
+void ControladorUsuario::iniciarSesion(string email) {
+    KeyString* key = new KeyString(email);
+
+    if (usuarios->member(key))
+        this->usuarioRecordado = dynamic_cast<Usuario*> (usuarios->find(key));
+    else
+        throw std::invalid_argument("Usuario no existe");
+}
+
+bool ControladorUsuario::ingresarContrasenia(string contrasenia) {
+    return usuarioRecordado->control(contrasenia);
+}
+
+void ControladorUsuario::asignarSesion() {
+    this->usuarioActual = this->usuarioRecordado;
+    this->usuarioRecordado = NULL;
+    this->primerCont = "";
+}
+
+bool ControladorUsuario::esUsuarioNuevo() {
+    return this->usuarioRecordado->getContrasenia() == "";
+}
+
+void ControladorUsuario::primerContrasenia(string cont) {
+    this->primerCont = cont;
+}
+
+bool ControladorUsuario::verificarContrasenia(string cont) {
+    return this->primerCont == cont;
+}
+
+void ControladorUsuario::activarUsuario() {
+    this->usuarioRecordado->setContrasenia(this->primerCont);
+}
+
+void ControladorUsuario::cerrarSesion() {
+    this->usuarioActual = NULL;
+}
+
+void ControladorUsuario::ingresarInmobiliaria(string nombre, DtDireccion* direccion, string email) {
+    KeyString* key = new KeyString(email);
+
+    if (usuarios->member(key))
+        throw std::invalid_argument("Usuario ya registrado con ese email");
+    else
+        usuarios->add(new Inmobiliaria(email, nombre, direccion), key);
+}
+
+void ControladorUsuario::ingresarInteresado(string nombre, string apellido, int edad, string email) {
+    KeyString* key = new KeyString(email);
+
+    if (usuarios->member(key))
+        throw std::invalid_argument("Usuario ya registrado con ese email");
+    else
+        usuarios->add(new Interesado(email, edad, nombre, apellido), key);
+}
+
+Usuario* ControladorUsuario::getUsuarioActual() {
+    return this->usuarioActual;
+}
+
 int ControladorUsuario::getCodigoUsuario() {
 
 }
@@ -60,57 +121,8 @@ TipoUsuario ControladorUsuario::getTipoUsuarioRecordado() {
     }
 }
 
-bool ControladorUsuario::esUsuarioNuevo() {
-    return this->usuarioRecordado->getContrasenia() == "";
-}
-
-void ControladorUsuario::iniciarSesion(string email) {
-    KeyString* key = new KeyString(email);
-
-    if (usuarios->member(key)) {
-        this->usuarioRecordado = dynamic_cast<Usuario*> (usuarios->find(key));
-    } else {
-        this->emailRecordado = email;
-    }
-}
-
-bool ControladorUsuario::ingresarContrasenia(string contrasenia) {
-    return usuarioRecordado->control(contrasenia);
-}
-
-void ControladorUsuario::asignarSesion() {
-    this->usuarioActual = this->usuarioRecordado;
-}
-
-void ControladorUsuario::primerContrasenia(string cont) {
-    this->primerCont = cont;
-}
-
-bool ControladorUsuario::verificarContrasenia(string cont) {
-    return this->primerCont == cont;
-}
-
-void ControladorUsuario::activarUsuario() {
-    this->usuarioRecordado->setContrasenia(this->primerCont);
-}
-
-void ControladorUsuario::cerrarSesion() {
-    this->usuarioActual = NULL;
-    this->usuarioRecordado = NULL;
-    this->emailRecordado = "";
-    this->primerCont = "";
-}
-
 void ControladorUsuario::ingresarAdministrador(string correo, string contrasenia) {
     this->usuarios->add(new Administrador(correo, contrasenia), new KeyString(correo));
-}
-
-void ControladorUsuario::ingresarInmobiliaria(string nombre, DtDireccion* direccion, string email) {
-    usuarios->add(new Inmobiliaria(email, nombre, direccion), new KeyString(email));
-}
-
-void ControladorUsuario::ingresarInteresado(string nombre, string apellido, int edad, string email) {
-    usuarios->add(new Interesado(email, edad, nombre, apellido), new KeyString(email));
 }
 
 DtInmobiliaria* ControladorUsuario::mostrarInmobiliaria() {
@@ -119,7 +131,7 @@ DtInmobiliaria* ControladorUsuario::mostrarInmobiliaria() {
 int ControladorUsuario::cantPorZonaYdep() {
 }
 
-ControladorUsuario::~ControladorUsuario() { // Delete usuarioActual y usuarioRecordado?????????????????
+ControladorUsuario::~ControladorUsuario() {
     delete this->usuarios;
     delete this->usuarioActual;
     delete this->usuarioRecordado;

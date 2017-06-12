@@ -1,6 +1,6 @@
 #include "DtPropiedad.h"
 
-DtPropiedad::DtPropiedad(int codigo, int cantAmb, int cantDorm, int cantBanios, bool garage, DtDireccion* direccion, float m2Edificios, float m2Tot) {
+DtPropiedad::DtPropiedad(int codigo, int cantAmb, int cantDorm, int cantBanios, bool garage, DtDireccion* direccion, float m2Edificados, float m2Tot) {
     this->codigo = codigo;
     this->cantAmb = cantAmb;
     this->cantDorm = cantDorm;

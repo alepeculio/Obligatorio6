@@ -2,8 +2,9 @@
 #define DTPROPIEDAD_H
 
 #include "DtDireccion.h"
+#include "ICollectible.h"
 
-class DtPropiedad {
+class DtPropiedad : public ICollectible {
 private:
     int codigo;
     int cantAmb;
@@ -17,7 +18,7 @@ private:
 public:
     DtPropiedad(int, int, int, int, bool, DtDireccion*, float, float);
 
-    int getCodigo(); //Getters
+    int getCodigo();
     int getCantAmb();
     int getCantDorm();
     int getCantBanios();

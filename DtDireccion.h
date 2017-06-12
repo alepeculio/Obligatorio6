@@ -19,6 +19,8 @@ public:
     string getCalle();
     int getNumero();
 
+    friend ostream& operator<<(ostream&, const DtDireccion&);
+
     ~DtDireccion();
 };
 

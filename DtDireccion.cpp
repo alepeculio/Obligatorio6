@@ -27,5 +27,10 @@ int DtDireccion::getNumero() {
     return this->numero;
 }
 
+ostream& operator<<(ostream& os, const DtDireccion& direccion) {
+    os << direccion.ciudad << ", " << direccion.calle << " " << direccion.numero;
+    return os;
+}
+
 DtDireccion::~DtDireccion() {
 }

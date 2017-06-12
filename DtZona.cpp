@@ -1,6 +1,6 @@
 #include "DtZona.h"
 
-DtZona::Dtzona(int codigo, string nombre) {
+DtZona::DtZona(int codigo, string nombre) {
     this->codigo = codigo;
     this->nombre = nombre;
 }

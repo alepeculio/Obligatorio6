@@ -6,8 +6,8 @@ IUsuario* Fabrica::getIUsuario() {
     return new ControladorUsuario();
 }
 
-IPropiedad* Fabrica::getIPropiedad() {
-    return new ControladorPropiedad();
+IPropiedad* Fabrica::getIPropiedad(IUsuario* iUsuario) {
+    return new ControladorPropiedad(iUsuario);
 }
 
 Fabrica::~Fabrica() {

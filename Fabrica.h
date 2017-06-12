@@ -7,7 +7,7 @@
 class Fabrica {
 public:
     IUsuario* getIUsuario();
-    IPropiedad* getIPropiedad();
+    IPropiedad* getIPropiedad(IUsuario*);
 
     ~Fabrica();
 };

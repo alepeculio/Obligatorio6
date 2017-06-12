@@ -16,10 +16,10 @@ private:
 public:
     Inmobiliaria(string, string, DtDireccion*);
 
-    void setNombre(string); //Setters
+    void setNombre(string);
     void setUbicacion(DtDireccion*);
 
-    string getNombre(); //Getters
+    string getNombre();
     DtDireccion* getUbicacion();
 
     ~Inmobiliaria();

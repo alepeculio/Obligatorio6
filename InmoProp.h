@@ -2,6 +2,7 @@
 #define INMOPROP_H
 
 #include "ICollection.h"
+#include "Inmobiliaria.h"
 #include <string>
 #include <iostream>
 using namespace std;
@@ -9,12 +10,13 @@ using namespace std;
 class InmoProp {
 private:
     Inmobiliaria* inmobiliaria;
-    ICollection* aviso;
+    ICollection* avisos;
+
 public:
     InmoProp(Inmobiliaria*);
 
     void setInmobiliaria(Inmobiliaria*);
-    void setAvisos(ICollection);
+    void setAvisos(ICollection*);
 
     Inmobiliaria* getInmobiliaria();
     ICollection* getAvisos();
@@ -22,11 +24,10 @@ public:
     ~InmoProp();
 
     ICollection* getMensajes(int);
-    void ingresarMensaje(string, string, int);
+    void ingresarMensaje(string, string, Usuario*);
     void setAlquiler(float);
     void setVenta(float);
     void borrarLinkInmoProp();
-
 };
 
 #endif

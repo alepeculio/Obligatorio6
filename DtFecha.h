@@ -1,6 +1,9 @@
 #ifndef DTFECHA_H
 #define DTFECHA_H
 
+#include <iostream>
+using namespace std;
+
 class DtFecha {
 private:
     int dia;
@@ -13,6 +16,8 @@ public:
     int getDia();
     int getMes();
     int getAnio();
+
+    friend ostream& operator<<(ostream&, const DtFecha&);
 
     ~DtFecha();
 };

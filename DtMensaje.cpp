@@ -1,29 +1,29 @@
 #include "DtMensaje.h"
-#include "DtFecha.h"
-#include "DtHora.h"
 
-DtMensaje::DtMensaje(DtFecha* fecha,DtHora* hora,string texto ,bool cliente){
+DtMensaje::DtMensaje(DtFecha* fecha, DtHora* hora, string texto, bool cliente) {
     this->fecha = fecha;
     this->hora = hora;
     this->texto = texto;
     this->cliente = cliente;
 }
 
-DtFecha* DtMensaje::getFecha(){
-    return fecha;
+DtFecha* DtMensaje::getFecha() {
+    return this->fecha;
 }
 
-DtHora* DtMensaje::getHora(){
-    return  hora;
+DtHora* DtMensaje::getHora() {
+    return this->hora;
 }
 
-string DtMensaje::getTexto(){
-    return texto;
+string DtMensaje::getTexto() {
+    return this->texto;
 }
 
-bool DtMensaje::getCliente(){
-    return cliente;
+bool DtMensaje::getCliente() {
+    return this->cliente;
 }
 
-DtMensaje::~DtMensaje(){
+DtMensaje::~DtMensaje() {
+    delete this->fecha;
+    delete this->hora;
 }

@@ -1,20 +1,28 @@
 #include "DtFecha.h"
 
-DtFecha::DtFecha(int dia,int mes,int anio){
-    this->dia= dia;
-    this->mes= mes;
-    this->anio= anio;
+DtFecha::DtFecha(int dia, int mes, int anio) {
+    this->dia = dia;
+    this->mes = mes;
+    this->anio = anio;
 
 }
 
-int DtFecha::getDia(){
+int DtFecha::getDia() {
     return dia;
 }
-int DtFecha::getMes(){
+
+int DtFecha::getMes() {
     return mes;
 }
-int DtFecha::getAnio(){
+
+int DtFecha::getAnio() {
     return anio;
 }
-DtFecha::~DtFecha(){
+
+ostream& operator<<(ostream& os, const DtFecha& fecha) {
+    os << fecha.dia << "/" << fecha.mes << "/" << fecha.anio;
+    return os;
+}
+
+DtFecha::~DtFecha() {
 }
