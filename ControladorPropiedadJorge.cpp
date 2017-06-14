@@ -44,7 +44,20 @@ ICollection* ControladorPropiedad::listarDepartamentos() {
     return res;
 }
 
-IDictionary* ControladorPropiedad::listarZonas(string nombreDep) {
+IDictionary* ControladorPropiedad::listarZonas(string nombreDep) {IKey* clave = new KeyString(nombreDep); //Se crea un KeyString con nombreDep
+    Departamento* dep = dynamic_cast<Departamento*> (departamentos->find(clave)); //Se busca con esa clave el departamento, se castea a tipo departamento y se guarda en dep
+    IDictionary* zon = dep->getZonas(); //Se guaradan las zonas del departamento dep en zon
+    IIterator* iter = zon->getIteratorObj(); //Se le pide un iterador a zon
+    IDictionary* res = new ListDicc(); //Se crea un IDictionary para devolver el resultado
+    while (iter->hasNext()) {
+        Zona* z = dynamic_cast<Zona*> (iter->getCurrent()); //Se obtiene el actual del iterador y se castea a tipo zona(para asegurarse de que sea una zona) y se guarda en z
+        IKey* c = new KeyInt(z->getCodigo()); //se crea un KeyInt con el codigo de z
+        res->add(z->getDatos(), c); //Se agrega z y la KeyInt al resultado
+        iter->next(); //Se apunta el iterador al siguiente
+    }
+    delete iter;
+    this->zonasRecordadas = res; //Se recuerda
+    return res;
 
 }
 
