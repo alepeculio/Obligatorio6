@@ -52,3 +52,8 @@ void Edificio::agregarApto(Apartamento* apartamento) {
 void Edificio::eliminar(Propiedad* propiedad) {
     this->apartamentos->removeKey(new KeyInt(propiedad->getCodigo()));
 }
+
+DtEdificio* Edificio::getDatos() {
+    DtEdificio* dte = new DtEdificio(this->nomEdificio,this->cantPisos,this->gastosComunes);
+    return dte;
+}

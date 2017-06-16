@@ -3,6 +3,12 @@
 Usuario::Usuario(string correo, string contrasenia) {
     this->correo = correo;
     this->contrasenia = contrasenia;
+    this->codigo = codigo;
+    codigo++; // codigo = generadorCodigo estatico para usuario
+}
+
+int Usuario::getCodigo() {
+    return this->codigo;
 }
 
 string Usuario::getCorreo() {

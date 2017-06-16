@@ -1,6 +1,7 @@
 #ifndef VENTA_H
 #define VENTA_H
 
+#include "Aviso.h"
 #include <string>
 #include <iostream>
 using namespace std;
@@ -10,14 +11,15 @@ private:
     float precioV;
 
 public:
-    Venta(float, ICollection*);
+    Venta(float);
 
     void setPrecioV(int);
 
     int getPrecioV();
 
-    ~Venta();
+    string getTipo();
 
+    ~Venta();
 };
 
 #endif

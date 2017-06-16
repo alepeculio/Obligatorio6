@@ -1,33 +1,46 @@
 #ifndef ZONA_H
 #define ZONA_H
 
+#include "DtZona.h"
+#include "ICollectible.h"
+#include "ICollection.h"
+#include "IDictionary.h"
+
+#include "Propiedad.h"
+#include "Ikey.h"
+#include "DtORIZona.h"
 #include <string>
 #include <iostream>
 using namespace std;
+
+class Propiedad;
 
 class Zona : public ICollectible {
 private:
     int codigo;
     string nombre;
-    ICollection* Propiedades;
+    IDictionary* propiedades;
 
 public:
-    Zona(int, string, ICollection*);
+    Zona(int, string);
 
     void setCodigo(int);
     void setNombre(string);
-    void setPropiedades(ICollection*);
+    void setPropiedades(IDictionary*);
 
     int getCodigo();
     string getNombre();
-    ICollection* getPropiedades();
+    IDictionary* getPropiedades();
 
     ~Zona();
 
     ICollection* listarPropiedad();
     DtZona* getDatos();
     void agregar(Propiedad*);
-    void eliminar(Propiedad*);
+    void eliminar(IKey*);
+
+    DtORIZona* obtenerReporteInmobiliaria(string);
+
 };
 
 #endif

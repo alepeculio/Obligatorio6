@@ -1,6 +1,7 @@
 #ifndef ALQUILER_H
 #define ALQUILER_H
 
+#include "Aviso.h"
 #include <string>
 #include <iostream>
 using namespace std;
@@ -10,11 +11,13 @@ private:
     float precioA;
 
 public:
-    Alquiler(float, ICollection*);
+    Alquiler(float);
 
     void setPrecioA(int);
 
     int getPrecioA();
+
+    string getTipo();
 
     ~Alquiler();
 };

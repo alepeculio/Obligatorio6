@@ -3,6 +3,7 @@
 
 #include "ICollection.h"
 #include "Inmobiliaria.h"
+#include "DtInmobiliaria.h"
 #include <string>
 #include <iostream>
 using namespace std;
@@ -28,6 +29,7 @@ public:
     void setAlquiler(float);
     void setVenta(float);
     void borrarLinkInmoProp();
+    DtInmobiliaria* selectPropiedad();
 };
 
 #endif

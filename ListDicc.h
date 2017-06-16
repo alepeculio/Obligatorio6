@@ -13,6 +13,7 @@ class ListDicc : public IDictionary {
 private:
     NodoDicc* primero;
     unsigned int tam;
+
 public:
     //constructores
     ListDicc();

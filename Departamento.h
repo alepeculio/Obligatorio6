@@ -8,6 +8,7 @@
 #include "ICollection.h"
 #include "IDictionary.h"
 #include "ICollectible.h"
+#include "DtORIDep.h"
 using namespace std;
 
 class Departamento : public ICollectible {
@@ -33,6 +34,8 @@ public:
 
     DtDepartamento* getDatos();
     ICollection* listarZonas();
+
+    DtORIDep* obtenerReporteInmobiliaria(string);
 };
 
 #endif

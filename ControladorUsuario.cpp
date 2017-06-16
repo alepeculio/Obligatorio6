@@ -4,7 +4,9 @@
 #include "Interesado.h"
 #include "Inmobiliaria.h"
 #include "ControladorUsuario.h"
-#include "Adminstrador.h"
+#include "Administrador.h"
+#include "Lista.h"
+#include "DtORIInmo.h"
 
 ControladorUsuario::ControladorUsuario() {
     this->usuarios = new ListDicc();
@@ -135,4 +137,24 @@ ControladorUsuario::~ControladorUsuario() {
     delete this->usuarios;
     delete this->usuarioActual;
     delete this->usuarioRecordado;
+}
+
+void ControladorUsuario::setIPropiedad(IPropiedad* iPropiedad) {
+    this->iPropiedad = iPropiedad;
+}
+
+ICollection* ControladorUsuario::obtenerReporteInmobiliarias() {
+  ICollection* resultado = new Lista();
+
+    IIterator* iterator = usuarios->getIteratorObj();
+    while (iterator->hasNext()) {
+        Inmobiliaria* inmo = dynamic_cast<Inmobiliaria*> (iterator->getCurrent());
+        if (inmo != NULL) {
+            resultado->add(new DtORIInmo(inmo->getDatos(), iPropiedad->obtenerReporteInmobiliaria(inmo->getCorreo())));
+        }
+        iterator->next();
+    }
+    delete iterator;
+
+    return resultado;
 }

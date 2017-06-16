@@ -5,11 +5,9 @@
 #include <stdexcept>
 #include <iomanip>
 
-using namespace std;
-
 #include "Fabrica.h"
 #include "Usuario.h"
-#include "Adminstrador.h"
+#include "Administrador.h"
 #include "Inmobiliaria.h"
 #include "Interesado.h"
 #include "Aviso.h"
@@ -19,6 +17,9 @@ using namespace std;
 #include "DtEdificio.h"
 #include "DtInmoProp.h"
 #include "DtMensaje.h"
+#include "DtORIZona.h"
+#include "DtORIDep.h"
+#include "DtORIInmo.h"
 
 using namespace std;
 
@@ -356,7 +357,7 @@ void altaPropiedad() {
     int cantBanios;
     bool garage;
     DtDireccion* direccion;
-    float n2Edificados;
+    float m2Edificados;
     float m2Tot;
     float m2EspVerde;
 
@@ -365,6 +366,7 @@ void altaPropiedad() {
     ICollection* departamentos = iPropiedad->listarDepartamentos();
     IIterator* depIterator = departamentos->iterator();
 
+    cout << endl << "Eliga departamento: " << endl << endl;
     elemento("Letra", 6);
     elemento("Matricula", 10);
     elemento("Nombre", 40);
@@ -384,13 +386,30 @@ void altaPropiedad() {
     cout << endl << "Nombre: ";
     str(depNombre);
 
-    ICollection* zonas = iPropiedad->listarZonas(depNombre);
+    ICollection* zonas;
+    try {
+        zonas = iPropiedad->listarZonas(depNombre);
+    } catch (const invalid_argument& e) {
+        cout << "-----------------------------------------" << endl;
+        cout << "   Error: " << e.what() << endl;
+        return;
+    }
+
     IIterator* zonaIterator = zonas->iterator();
 
-    cout << "Codigo \t Nombre" << endl;
+    cout << "-----------------------------------------" << endl;
+    cout << "Zonas del departamento " << depNombre << ": " << endl << endl;
+    elemento("Codigo", 7);
+    elemento("Nombre", 10);
+    cout << endl << endl;
+
     while (zonaIterator->hasNext()) {
         DtZona* dtZona = dynamic_cast<DtZona*> (zonaIterator->getCurrent());
-        cout << dtZona->getCodigo() << "\t" << dtZona->getNombre() << endl;
+
+        elemento(dtZona->getCodigo(), 7);
+        elemento(dtZona->getNombre(), 10);
+        cout << endl;
+
         zonaIterator->next();
     }
     delete zonaIterator;
@@ -398,9 +417,16 @@ void altaPropiedad() {
     cout << endl << "Codigo: ";
     cin >> zonaCodigo;
 
-    iPropiedad->selectZona(zonaCodigo);
+    try {
+        iPropiedad->selectZona(zonaCodigo);
+    } catch (const invalid_argument& e) {
+        cout << "-----------------------------------------" << endl;
+        cout << "   Error: " << e.what() << endl;
+        return;
+    }
 
-    cout << endl << " - Tipo:" << endl;
+    cout << "-----------------------------------------" << endl;
+    cout << " - Eliga tipo de propiedad:" << endl;
     cout << " 1 - Apartamento" << endl;
     cout << " 2 - Casa" << endl;
     cout << endl;
@@ -413,38 +439,61 @@ void altaPropiedad() {
             break;
     }
 
+    cout << "-----------------------------------------" << endl;
     if (opcion == 1) {
-        ICollection* edificios = iPropiedad->listarZonas(depNombre);
-        IIterator* edifIterator = zonas->iterator();
+        ICollection* edificios = iPropiedad->listarEdificios();
+        IIterator* edifIterator = edificios->iterator();
 
-        cout << "Nombre \t Pisos \t Gastos" << endl;
+        cout << "Edificios:" << endl << endl;
+        elemento("Nombre", 10);
+        elemento("Pisos", 10);
+        elemento("Gastos", 10);
+        cout << endl;
+
         while (edifIterator->hasNext()) {
             DtEdificio* dtEdificio = dynamic_cast<DtEdificio*> (edifIterator->getCurrent());
-            cout << dtEdificio->getNomEdificio() << "\t" << dtEdificio->getCantPisos() << "\t" << dtEdificio->getGastosComunes() << endl;
+
+            elemento(dtEdificio->getNomEdificio(), 10);
+            elemento(dtEdificio->getCantPisos(), 10);
+            elemento(dtEdificio->getGastosComunes(), 10);
+            cout << endl;
+
             edifIterator->next();
         }
         delete edifIterator;
 
+        cout << endl;
         if (mensajeOpcion("Desea dar de alta un edificio?")) {
             altaEdificio();
         }
 
-        cout << endl << "Nombre Edificio: ";
+        cout << "-----------------------------------------" << endl;
+        cout << "En que edificio esta el apartamento?\nNombre: ";
         str(nombreEdificio);
 
-        iPropiedad->selectEdificio(nombreEdificio);
+        try {
+            iPropiedad->selectEdificio(nombreEdificio);
+        } catch (const invalid_argument& e) {
+            cout << "-----------------------------------------" << endl;
+            cout << "   Error: " << e.what() << endl;
+            return;
+        }
 
+        cout << "-----------------------------------------" << endl;
+        cout << "Caracteristicas del apartamento:" << endl << endl;
         if (mensajeOpcion("El apartamento esta en alquiler?")) {
             cout << "Precio Alquiler: ";
             cin >> precioA;
             iPropiedad->fijarAlquiler(precioA);
         }
 
+        cout << "-----------------------------------------" << endl;
         if (mensajeOpcion("El apartamento esta en venta?")) {
             cout << "Precio Venta: ";
             cin >> precioV;
             iPropiedad->fijarVenta(precioV);
         }
+        cout << "-----------------------------------------" << endl;
 
         cout << "Codigo: ";
         cin >> codigo;
@@ -459,26 +508,36 @@ void altaPropiedad() {
         garage = mensajeOpcion("Tiene garage?");
         direccion = generarDireccion();
         cout << "Metros cuadrados edificados: ";
-        cin >> n2Edificados;
+        cin >> m2Edificados;
         cout << "Metros cuadrados totales: ";
         cin >> m2Tot;
 
-        iPropiedad->altaApto(new DtApartamento(codigo, cantAmb, cantDorm, cantBanios, garage, direccion, n2Edificados, m2Tot, num));
+        try {
+            iPropiedad->altaApto(new DtApartamento(codigo, cantAmb, cantDorm, cantBanios, garage, direccion, m2Edificados, m2Tot, num));
+        } catch (const invalid_argument& e) {
+            cout << "-----------------------------------------" << endl;
+            cout << "   Error: " << e.what() << endl;
+            return;
+        }
 
         cout << "-----------------------------------------" << endl;
         cout << "   Apartamento Ingresado!" << endl;
     } else if (opcion == 2) {
+        cout << "Caracteristicas del apartamento:" << endl << endl;
+        bool alquiler = false;
         if (mensajeOpcion("La casa esta en alquiler?")) {
             cout << "Precio Alquiler: ";
             cin >> precioA;
-            iPropiedad->fijarAlquiler(precioA);
+            alquiler = iPropiedad->fijarAlquiler(precioA);
         }
 
-        if (mensajeOpcion("La casa esta en venta?")) {
+        cout << "-----------------------------------------" << endl;
+        if (!alquiler || mensajeOpcion("La casa esta en venta?")) {
             cout << "Precio Venta: ";
             cin >> precioV;
             iPropiedad->fijarVenta(precioV);
         }
+        cout << "-----------------------------------------" << endl;
 
         cout << "Codigo: ";
         cin >> codigo;
@@ -491,18 +550,25 @@ void altaPropiedad() {
         garage = mensajeOpcion("Tiene garage?");
         direccion = generarDireccion();
         cout << "Metros cuadrados edificados: ";
-        cin >> n2Edificados;
+        cin >> m2Edificados;
         cout << "Metros cuadrados totales: ";
         cin >> m2Tot;
         cout << "Metros cuadrados de espacio verde: ";
         cin >> m2EspVerde;
 
-        iPropiedad->altaCasa(new DtCasa(codigo, cantAmb, cantDorm, cantBanios, garage, direccion, n2Edificados, m2Tot, m2EspVerde));
+        try {
+            iPropiedad->altaCasa(new DtCasa(codigo, cantAmb, cantDorm, cantBanios, garage, direccion, m2Edificados, m2Tot, m2EspVerde));
+        } catch (const invalid_argument& e) {
+            cout << "-----------------------------------------" << endl;
+            cout << "   Error: " << e.what() << endl;
+            return;
+        }
 
         cout << "-----------------------------------------" << endl;
         cout << "   Casa Ingresada!" << endl;
     }
 }
+
 
 void consultarPropiedad() {
     string depNombre;
@@ -539,8 +605,8 @@ void consultarPropiedad() {
     cout << endl << "Codigo Zona: ";
     cin >> zonaCodigo;
 
-    IDictionary* propiedades = iPropiedad->listarPropiedades(zonaCodigo);
-    IIterator* propIterator = propiedades->getIteratorObj();
+    ICollection* propiedades = iPropiedad->listarPropiedades(zonaCodigo);
+    IIterator* propIterator = propiedades->iterator();
 
     cout << "Codigo \t Direccion \t Tipo " << endl;
     while (propIterator->hasNext()) {
@@ -715,8 +781,8 @@ void enviarMensajeInteresado() {
     cout << endl << "Codigo Zona: ";
     cin >> zonaCodigo;
 
-    IDictionary* propiedades = iPropiedad->listarPropiedades(zonaCodigo);
-    IIterator* propIterator = propiedades->getIteratorObj();
+    ICollection* propiedades = iPropiedad->listarPropiedades(zonaCodigo);
+    IIterator* propIterator = propiedades->iterator();
 
     cout << "Codigo \t Direccion \t Tipo " << endl;
     while (propIterator->hasNext()) {
@@ -790,7 +856,54 @@ void enviarMensajeInmobiliaria() {
 
 void obtenerReporteInmobiliarias() {
     cout << "===== Obtener Reporte Inmobiliarias =====" << endl;
+
+    ICollection* dtORIInmos = iUsuario->obtenerReporteInmobiliarias();
+    IIterator* inmos = dtORIInmos->iterator();
+    while (inmos->hasNext()) {
+        DtORIInmo* inmo = dynamic_cast<DtORIInmo*> (inmos->getCurrent());
+        DtInmobiliaria* dtInmo = inmo->getInmobiliaria();
+        cout << "Nombre: " << dtInmo->getNombre() << endl;
+        cout << "Correo: " << dtInmo->getCorreo() << endl;
+        cout << "Direccion: " << *dtInmo->getDireccion() << endl << endl;
+
+        elemento("Departamento", 15);
+        elemento("Zona", 8);
+        elemento("Casas", 6);
+        elemento("Apartamentos", 12);
+        cout << endl << endl;
+
+        ICollection* dtDeps = inmo->getDtORIDeps();
+        IIterator* iDeps = dtDeps->iterator();
+        while (iDeps->hasNext()) {
+            DtORIDep* dtDep = dynamic_cast<DtORIDep*> (iDeps->getCurrent());
+
+            ICollection* dtZonas = dtDep->getDtORIZonas();
+            IIterator* iZonas = dtZonas->iterator();
+            while (iZonas->hasNext()) {
+                DtORIZona* dtZona = dynamic_cast<DtORIZona*> (iZonas->getCurrent());
+
+                elemento(dtDep->getNombre(), 15);
+                elemento(dtZona->getNombre(), 8);
+                elemento(dtZona->getCantCasas(), 6);
+                elemento(dtZona->getCantAptos(), 12);
+                cout << endl;
+
+                iZonas->next();
+            }
+            delete iZonas;
+
+            iDeps->next();
+        }
+        delete iDeps;
+
+        inmos->next();
+
+        if (inmos->hasNext())
+            cout << "-----------------------------------------" << endl;
+    }
+    delete inmos;
 }
+
 
 void str(string & str) {
     cin.clear();

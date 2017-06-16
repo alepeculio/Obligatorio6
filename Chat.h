@@ -2,18 +2,20 @@
 #define CHAT_H
 
 #include "Interesado.h"
+#include "ICollection.h"
 #include <string>
 #include <iostream>
 using namespace std;
 
 class Chat : public ICollectible {
 private:
-    ICollection* Mensajes;
+    ICollection* mensajes;
     Interesado* interesado;
-public:
-    Chat(ICollection, Interesado*);
 
-    void setMensaje(ICollection*);
+public:
+    Chat(Interesado*);
+
+    void setMensajes(ICollection*);
     void setInteresado(Interesado*);
 
     ICollection* getMensajes();
@@ -22,7 +24,7 @@ public:
     ~Chat();
 
     void ingresarMensaje(string);
-    void getMensajes(int);
+    ICollection* getMensajes(int);
     void borrarLinkAviso();
     int getCodigoInter();
 };

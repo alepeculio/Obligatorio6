@@ -5,6 +5,7 @@
 #include "Apartamento.h"
 #include "Propiedad.h"
 #include "IDictionary.h"
+#include "DtEdificio.h"
 
 #include <string>
 #include <iostream>
@@ -30,11 +31,12 @@ public:
     int getCantPisos();
     int getGastosComunes();
     IDictionary* getApartamento();
-
+    
     ~Edificio();
 
     void agregarApto(Apartamento*);
     void eliminar(Propiedad*);
+    DtEdificio* getDatos();
 };
 
 #endif

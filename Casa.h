@@ -1,6 +1,10 @@
 #ifndef CASA_H
 #define CASA_H
 
+#include "DtDireccion.h"
+#include "Propiedad.h"
+#include "DtCasa.h"
+
 #include <string>
 #include <iostream>
 using namespace std;
@@ -10,7 +14,8 @@ private:
     float m2EspVerde;
 
 public:
-    Casa(float, int, int, int, int, bool, DtDireccion*, float, float, InmoProp*);
+    Casa( int, int, int, int, bool, DtDireccion*, float, float, float);
+    Casa(DtCasa*);
 
     void setM2EspVerde(float);
 

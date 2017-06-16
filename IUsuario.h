@@ -6,6 +6,8 @@
 #include "DtDireccion.h"
 #include "Usuario.h"
 #include "Utiles.h"
+#include "ICollection.h"
+#include "IPropiedad.h"
 #include <string>
 #include <iostream>
 using namespace std;
@@ -31,6 +33,9 @@ public:
     virtual int getCodigoUsuario() = 0;
     virtual TipoUsuario getTipoUsuario() = 0;
     virtual TipoUsuario getTipoUsuarioRecordado() = 0;
+    virtual void setIPropiedad(IPropiedad*) = 0;
+
+    virtual ICollection* obtenerReporteInmobiliarias() = 0;
 };
 
 #endif

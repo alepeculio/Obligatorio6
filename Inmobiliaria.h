@@ -3,6 +3,7 @@
 
 #include "DtDireccion.h"
 #include "Usuario.h"
+#include "DtInmobiliaria.h"
 #include <string>
 #include <iostream>
 
@@ -21,7 +22,7 @@ public:
 
     string getNombre();
     DtDireccion* getUbicacion();
-
+    DtInmobiliaria* getDatos();
     ~Inmobiliaria();
 };
 

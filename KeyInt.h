@@ -1,6 +1,8 @@
 #ifndef KEYINT_H
 #define KEYINT_H
 
+#include "IKey.h"
+
 class KeyInt : public IKey {
 private:
     int n;
@@ -11,10 +13,6 @@ public:
     int getKeyInt();
 
     ~KeyInt();
-
-
 };
 
-
-#endif /* KEYINT_H */
-
+#endif
