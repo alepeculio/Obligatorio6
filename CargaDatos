@@ -1,0 +1,518 @@
+//en main como variable global:
+bool carga = false;
+//en menu admin:
+cout << " 4 - Carga Opcional de Datos del Sistema" << endl;
+case 4:
+                CargaInicialdeDatos();
+                break;
+
+---main.cpp:
+
+void CargaInicialdeDatos(){
+    if (carga == true)
+        cout<<"Esta opción esta bloqueada, no se pueden cargar los datos nuevamente"<<endl;
+    else{
+        int x = 1;
+        iUsuario->ingresarAdministrador("adm1@sis.com", "Pass1");
+        iUsuario->CargarDatos();
+        cout<<"Se han cargado los datos de usuarios."<<endl;
+        iPropiedad->CargarDatos();
+        cout<<"Se han cargado los datos de propiedades."<<endl;
+        carga = true;
+        while (x==1 || x==2 || x==3){
+            cout<<"Para comprobar que se han cargado correctamente puede elegir alguna de estas opciones:"<<endl;
+            cout<<"1:Lista de Usuarios Cargados en el Sistema   ";
+            cout<<"2:Lista de Edificios con sus apartamentos asociados  ";
+            cout<<"3:Lista de Departamentos, Zonas, Propiedades, Inmobiliarias y Mensajes"<<endl;
+            cout<<"Numero n: volver al menu de Administrador"<<endl;
+            cin>>x;
+            if (x==1){
+                cout<<"Lista de usuarios cargados en el sistema:"<<endl;
+                cout<<endl;
+                ListDiccIteratorObj* iter = dynamic_cast<ListDiccIteratorObj*>(iUsuario->getListaUsuarios()->getIteratorObj());
+                while (iter->hasNext()){
+                    ICollectible* elem = iter->next();
+                    Inmobiliaria* i = dynamic_cast<Inmobiliaria*> (elem);
+                    if (i!=NULL){
+                        cout<<"Inmobiliaria: ";
+                        cout<<"Nombre:";
+                        elemento(i->getNombre(),11);
+                        cout<<"Correo:";
+                        elemento(i->getCorreo(), 15);
+                        cout<<"Direccion:";
+                        elemento(i->getUbicacion()->getCalle(),9);
+                        elemento(i->getUbicacion()->getNumero(),5);
+                        elemento(i->getUbicacion()->getCiudad(),15);
+                        cout<<endl;
+                    }
+                    else{
+                        Administrador* a = dynamic_cast<Administrador*> (elem);
+                        if (a!=NULL){
+                            cout<<"Administrador: ";
+                            cout<<"Correo:";
+                            elemento(a->getCorreo(),11);
+                            cout<<endl;
+                        }
+                        else{
+                            Interesado* in = dynamic_cast<Interesado*> (elem);
+                            if (in!=NULL){
+                                cout<<"Interesado: ";
+                                cout<<"Nombre:";
+                                elemento(in->getNombre(),11);
+                                elemento(in->getApellido(),11);
+                                cout<<"Correo:";
+                                elemento(in->getCorreo(), 15);
+                                cout<<"Edad:";
+                                elemento(in->getEdad(),3);
+                                cout<<endl;
+                            }
+                        }
+                    }
+                }
+            }
+            if (x==2){
+                ListDiccIteratorObj* iteredi = dynamic_cast<ListDiccIteratorObj*>(iPropiedad->getListaEdificios()->getIteratorObj());
+                cout<<"Edificios:"<<endl;
+                while (iteredi->hasNext()){
+                    Edificio* ed = dynamic_cast<Edificio*> (iteredi->next());
+                    cout<<"Nombre:";
+                    elemento(ed->getNomEdificio(),16);
+                    cout<<"Cantidad de pisos:";
+                    elemento(ed->getCantPisos(),3);
+                    cout<<"Gastos comunes:";
+                    elemento(ed->getGastosComunes(),5);
+                    cout<<endl;
+                    cout<<"Tiene los siguientes apartamentos:"<<endl;
+                    ListDiccIteratorObj* iterapto = dynamic_cast<ListDiccIteratorObj*>(ed->getApartamento()->getIteratorObj());
+                    if (!iterapto->hasNext())
+                        cout<<"Este edificio no tiene apartamentos"<<endl;
+                    else{
+                        while (iterapto->hasNext()){
+                            Apartamento* apto = dynamic_cast<Apartamento*>(iterapto->next());
+                            cout<<"Codigo:";
+                            elemento(apto->getCodigo(),5);
+                            cout<<"Direccion:";
+                            elemento(apto->getDireccion()->getCalle(),9);
+                            elemento(apto->getDireccion()->getNumero(),5);
+                            elemento(apto->getNum(),3);
+                            elemento(apto->getDireccion()->getCiudad(),8);
+                            cout<<endl;
+                        }
+                    }
+                }
+            }
+            if (x==3){
+                ListDiccIteratorObj* iterdpto = dynamic_cast<ListDiccIteratorObj*>(iPropiedad->getListaPropiedades()->getIteratorObj());
+                cout<<"Departamentos:"<<endl;
+                while (iterdpto->hasNext()){
+                    Departamento* dpto = dynamic_cast<Departamento*> (iterdpto->next());
+                    cout<<"Nombre Departamento:";
+                    elemento(dpto->getNombre(),11);
+                    cout<<"\tMatricula:";
+                    elemento(dpto->getMatricula(),4);
+                    cout<<"\tLetra Característica:";
+                    elemento(dpto->getLetra(),2);
+                    cout<<"\nZonas del departamento:"<<endl;
+                    ListDiccIteratorObj* iterzona = dynamic_cast<ListDiccIteratorObj*>(dpto->getZonas()->getIteratorObj());
+                    if (!iterzona->hasNext())
+                        cout<<"Este departamento no tiene zonas asociadas"<<endl;
+                    else
+                        while (iterzona->hasNext()){
+                            Zona* zona = dynamic_cast<Zona*> (iterzona->next());
+                            cout<<"Nombre Zona:";
+                            elemento(zona->getNombre(),6);
+                            cout<<"\tCodigo Zona";
+                            elemento(zona->getCodigo(),4);
+                            cout<<"\nPropiedades de la Zona:"<<endl;
+                            ListDiccIteratorObj* iterprop = dynamic_cast<ListDiccIteratorObj*>(zona->getPropiedades()->getIteratorObj());
+                            while (iterprop->hasNext()){
+                                ICollectible* elem = iterprop->next();
+                                Apartamento* apto = dynamic_cast<Apartamento*>(elem);
+                                if (apto!=NULL){
+                                    cout<<"Codigo de Apartamento:";
+                                    elemento(apto->getCodigo(),5);
+                                    cout<<"\tNumero de ambientes:";
+                                    elemento(apto->getCantAmb(),3);
+                                    cout<<"\tNumero de dormitorios:";
+                                    elemento(apto->getCantDorm(),2);
+                                    cout<<"\tNumero de baños:";
+                                    elemento(apto->getCantBanios(),2);
+                                    if (apto->getGarage())
+                                        cout<<"\tGarage: si";
+                                    else
+                                        cout<<"\tGarage: no";
+                                    cout<<"\nDireccion: ";
+                                    elemento(apto->getDireccion()->getCalle(),8);
+                                    elemento(apto->getDireccion()->getNumero(),5);
+                                    cout<<"\tNum:";
+                                    elemento(apto->getNum(),4);
+                                    elemento(apto->getDireccion()->getCiudad(),11);
+                                    cout<<"\tMetros edificados y totales:";
+                                    elemento(apto->getM2Edificados(),3);
+                                    cout<<"/";
+                                    elemento(apto->getM2Tot(),3);
+                                    cout<<endl;
+                                    cout<<"Esta propiedad es de la Inmobiliaria: ";
+                                    cout<<apto->getInmoProp()->getInmobiliaria()->getNombre()<<endl;      
+                                    ListaIterator* iteraviso = dynamic_cast<ListaIterator*>(apto->getInmoProp()->getAvisos()->iterator());
+                                    Venta* v1 = dynamic_cast<Venta*> (iteraviso->getCurrent());
+                                    Alquiler* a1 = dynamic_cast<Alquiler*> (iteraviso->getCurrent());
+                                    if (v1!=NULL){
+                                        cout<<"\nEsta en venta por la modesta suma de:";
+                                        elemento(v1->getPrecioV(),6);
+                                        ListaIterator* iterchat = dynamic_cast<ListaIterator*>(v1->getChats()->iterator());
+                                        if (!iterchat->hasNext())
+                                            cout<<"\nEsta propiedad no tiene ningun chat asociado\n\n";
+                                        else{
+                                            cout<<"\nTiene los siguientes chats asociados:\n";
+                                            while(iterchat->hasNext()){
+                                                Chat* ch = dynamic_cast<Chat*> (iterchat->next());
+                                                Interesado* interes = ch->getInteresado();
+                                                cout<<"El siguiente interesado tiene un chat con la propiedad:";
+                                                cout<<interes->getNombre()<<" "<<interes->getApellido()<<endl;
+                                                cout<<"\nSus mensajes son:\n";
+                                                ListaIterator* itermensaje = dynamic_cast<ListaIterator*>(ch->getMensajes()->iterator());
+                                                while(itermensaje->hasNext()){
+                                                    Mensaje* men = dynamic_cast<Mensaje*>(itermensaje->next());
+                                                    cout<<"Contenido del mensaje:";
+                                                    elemento(men->getTexto(),30);
+                                                    cout<<"\tFecha: ";
+                                                    cout<<men->getFecha()->getDia()<<"/"<<men->getFecha()->getMes()<<"/"<<men->getFecha()->getAnio();
+                                                    cout<<"\tHora: ";
+                                                    cout<<men->getHora()->getHora()<<":"<<men->getHora()->getMin();
+                                                    cout<<"\nFin del mensaje\n\n";
+                                                }
+                                            }
+                                        }
+                                    }
+                                    if (a1!=NULL){
+                                        cout<<"Esta en alquiler por la modesta suma de:";
+                                        elemento(a1->getPrecioA(),6);
+                                        ListaIterator* iterchat = dynamic_cast<ListaIterator*>(a1->getChats()->iterator());
+                                        if (!iterchat->hasNext())
+                                            cout<<"\nEsta propiedad no tiene ningun chat asociado\n\n";
+                                        else{
+                                            cout<<"\nTiene los siguientes chats asociados:\n";
+                                            while(iterchat->hasNext()){
+                                                Chat* ch = dynamic_cast<Chat*> (iterchat->next());
+                                                Interesado* interes = ch->getInteresado();
+                                                cout<<"El siguiente interesado tiene un chat con la propiedad:";
+                                                cout<<interes->getNombre()<<" "<<interes->getApellido()<<endl;
+                                                cout<<"\nSus mensajes son:\n";
+                                                ListaIterator* itermensaje = dynamic_cast<ListaIterator*>(ch->getMensajes()->iterator());
+                                                while(itermensaje->hasNext()){
+                                                    Mensaje* men = dynamic_cast<Mensaje*>(itermensaje->next());
+                                                    cout<<"Contenido del mensaje:";
+                                                    elemento(men->getTexto(),30);
+                                                    cout<<"\tFecha: ";
+                                                    cout<<men->getFecha()->getDia()<<"/"<<men->getFecha()->getMes()<<"/"<<men->getFecha()->getAnio();
+                                                    cout<<"\tHora: ";
+                                                    cout<<men->getHora()->getHora()<<":"<<men->getHora()->getMin();
+                                                    cout<<"\nFin del mensaje\n\n";
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else{
+                                    Casa* casa = dynamic_cast<Casa*>(elem);
+                                    if (casa!=NULL){
+                                        cout<<"Codigo de Casa:";
+                                        elemento(casa->getCodigo(),5);
+                                        cout<<"\tNumero de ambientes:";
+                                        elemento(casa->getCantAmb(),3);
+                                        cout<<"\tNumero de dormitorios:";
+                                        elemento(casa->getCantDorm(),2);
+                                        cout<<"\tNumero de baños:";
+                                        elemento(casa->getCantBanios(),2);
+                                        if (casa->getGarage())
+                                            cout<<"\tGarage: si";
+                                        else
+                                            cout<<"\tGarage: no";
+                                        cout<<"\nDireccion: ";
+                                        elemento(casa->getDireccion()->getCalle(),8);
+                                        elemento(casa->getDireccion()->getNumero(),5);
+                                        elemento(casa->getDireccion()->getCiudad(),11);
+                                        cout<<"\nMetros edificados: ";
+                                        elemento(casa->getM2Edificados(),3);
+                                        cout<<"\tMetros de espacio verde: ";
+                                        elemento(casa->getM2EspVerde(),3);
+                                        cout<<"\tMetros totales: ";
+                                        elemento(casa->getM2Tot(),3);
+                                        cout<<endl;
+                                        cout<<"Esta propiedad es de la Inmobiliaria: ";
+                                        cout<<casa->getInmoProp()->getInmobiliaria()->getNombre()<<endl; 
+                                        ListaIterator* iteraviso = dynamic_cast<ListaIterator*>(casa->getInmoProp()->getAvisos()->iterator());
+                                        Venta* v1 = dynamic_cast<Venta*> (iteraviso->getCurrent());
+                                        Alquiler* a1 = dynamic_cast<Alquiler*> (iteraviso->getCurrent());
+                                        if (v1!=NULL){
+                                        cout<<"\nEsta en venta por la modesta suma de:";
+                                        elemento(v1->getPrecioV(),6);
+                                        ListaIterator* iterchat = dynamic_cast<ListaIterator*>(v1->getChats()->iterator());
+                                        if (!iterchat->hasNext())
+                                            cout<<"\nEsta propiedad no tiene ningun chat asociado\n\n";
+                                        else{
+                                            cout<<"\nTiene los siguientes chats asociados:\n";
+                                            while(iterchat->hasNext()){
+                                                Chat* ch = dynamic_cast<Chat*> (iterchat->next());
+                                                Interesado* interes = ch->getInteresado();
+                                                cout<<"El siguiente interesado tiene un chat con la propiedad:";
+                                                cout<<interes->getNombre()<<" "<<interes->getApellido()<<endl;
+                                                cout<<"Sus mensajes son:"<<endl;
+                                                ListaIterator* itermensaje = dynamic_cast<ListaIterator*>(ch->getMensajes()->iterator());
+                                                while(itermensaje->hasNext()){
+                                                    Mensaje* men = dynamic_cast<Mensaje*>(itermensaje->next());
+                                                    cout<<"Contenido del mensaje:";
+                                                    elemento(men->getTexto(),30);
+                                                    cout<<"\tFecha: ";
+                                                    cout<<men->getFecha()->getDia()<<"/"<<men->getFecha()->getMes()<<"/"<<men->getFecha()->getAnio();
+                                                    cout<<"\tHora: ";
+                                                    cout<<men->getHora()->getHora()<<":"<<men->getHora()->getMin();
+                                                    cout<<"\nFin del mensaje\n\n";
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if (a1!=NULL){
+                                            cout<<"\nEsta en alquiler por la modesta suma de:";
+                                            elemento(a1->getPrecioA(),6);
+                                            ListaIterator* iterchat = dynamic_cast<ListaIterator*>(a1->getChats()->iterator());
+                                            if (!iterchat->hasNext())
+                                                cout<<"\nEsta propiedad no tiene ningun chat asociado\n\n";
+                                            else{
+                                                cout<<"\nTiene los siguientes chats asociados:\n";
+                                                while(iterchat->hasNext()){
+                                                    Chat* ch = dynamic_cast<Chat*> (iterchat->next());
+                                                    Interesado* interes = ch->getInteresado();
+                                                    cout<<"El siguiente interesado tiene un chat con la propiedad:";
+                                                    cout<<interes->getNombre()<<" "<<interes->getApellido()<<endl;
+                                                    cout<<"\nSus mensajes son:\n";
+                                                    ListaIterator* itermensaje = dynamic_cast<ListaIterator*>(ch->getMensajes()->iterator());
+                                                    while(itermensaje->hasNext()){
+                                                        Mensaje* men = dynamic_cast<Mensaje*>(itermensaje->next());
+                                                        cout<<"Contenido del mensaje:";
+                                                        elemento(men->getTexto(),30);
+                                                        cout<<"\tFecha: ";
+                                                        cout<<men->getFecha()->getDia()<<"/"<<men->getFecha()->getMes()<<"/"<<men->getFecha()->getAnio();
+                                                        cout<<"\tHora: ";
+                                                        cout<<men->getHora()->getHora()<<":"<<men->getHora()->getMin();
+                                                        cout<<"\nFin del mensaje\n\n";
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }          
+                }
+            }
+            if (x==1 || x==2 || x==3)
+                cout<<"Volviendo al menu de Administrador"<<endl;
+            else
+                cout<<"Volviendo al menu de Administrador"<<endl;
+        }
+    }
+}
+
+---ControladorUsuario.cpp:
+
+void ControladorUsuario::CargarDatos(){
+    usuarios->add(new Inmobiliaria("inm1@sis.com","Selmo", "pass4",new DtDireccion("No disponible","Benitez",1134)),new KeyString("inm1@sis.com"));
+    usuarios->add(new Inmobiliaria("inm2@sis.com","Garcia", "pass5", new DtDireccion("No disponible","Rivera",1340)),new KeyString("inm2@sis.com"));
+    usuarios->add(new Inmobiliaria("inm3@sis.com","Invernissi", "pass6", new DtDireccion("No disponible","Comercio",234)),new KeyString("inm3@sis.com"));
+    usuarios->add(new Inmobiliaria("inm4@sis.com","Solei","pass7", new DtDireccion("No disponible","Inca",3456)), new KeyString("inm4@sis.com"));
+    usuarios->add(new Interesado("int1@sis.com",34,"Julio","Chaz","passt1"), new KeyString("int1@sis.com"));
+    usuarios->add(new Interesado("int2@sis.com",56,"Andrea","Berruti","passt2"), new KeyString("int2@sis.com"));
+    usuarios->add(new Interesado("int3@sis.com",45,"Sonia","Braga","passt3"), new KeyString("int3@sis.com"));
+    usuarios->add(new Interesado("int4@sis.com",30,"Alfonso","Mier","passt4"), new KeyString("int4@sis.com"));
+    usuarios->add(new Interesado("Int5.com",60,"Juan","Alpi","passt5"), new KeyString("Int5.com"));
+}
+
+---ControladorPropiedad.cpp:
+
+void ControladorPropiedad::CargarDatos(){
+    departamentos->add(new Departamento("AAA","Canelones"), new KeyString("A"));
+    departamentos->add(new Departamento("BBB","Maldonado"), new KeyString("B"));
+    departamentos->add(new Departamento("CCC","Rocha" ), new KeyString("C"));
+    departamentos->add(new Departamento("DDD","Salto"), new KeyString("D"));
+    departamentos->add(new Departamento("EEE","Montevideo"), new KeyString("E"));
+    Departamento* depa = dynamic_cast<Departamento*> (departamentos->find(new KeyString("A")));
+    IDictionary* listaaux = depa->getZonas();
+    listaaux->add(new Zona(101,"Zona1"), new KeyInt(101));
+    listaaux->add(new Zona(102,"Zona2"), new KeyInt(102));
+    Departamento* depb = dynamic_cast<Departamento*> (departamentos->find(new KeyString("B")));
+    IDictionary* listaaux2 = depb->getZonas();
+    listaaux2->add(new Zona(103,"Zona3"), new KeyInt(103));
+    Departamento* depd = dynamic_cast<Departamento*> (departamentos->find(new KeyString("D")));
+    IDictionary* listaaux3 = depd->getZonas();
+    listaaux3->add(new Zona(104,"Zona4"), new KeyInt(104));
+    listaaux3->add(new Zona(105,"Zona5"), new KeyInt(105));
+    edificios->add(new Edificio("Apache Valiente",4,1234), new KeyString("Apache Valiente"));
+    edificios->add(new Edificio("Mebeo",20,3452), new KeyString("Mebeo"));
+    edificios->add(new Edificio("Socrates",34,456), new KeyString("Socrates"));
+    edificios->add(new Edificio("El Burdel",12,800), new KeyString("El Burdel"));
+    edificios->add(new Edificio("Milajo",5,900), new KeyString("Milajo"));
+    //IDictionary* listaaux = depa->getZonas();
+    Zona* zon1 = dynamic_cast <Zona*> (listaaux->find(new KeyInt(101)));
+    IDictionary* propiedades = zon1->getPropiedades();
+    propiedades->add(new Casa(2113,3,1,1,false, new DtDireccion(depa->getNombre(),"Chapaz",345),12,22,10), new KeyInt(2113));
+    propiedades->add(new Casa(2115,3,1,1,false, new DtDireccion(depa->getNombre(),"Venecia",3456),25,25,0), new KeyInt(2115));
+    propiedades->add(new Apartamento(1111,2,1,1,false, new DtDireccion(depa->getNombre(),"Iturria",1115),34,34,104), new KeyInt(1111));
+    propiedades->add(new Apartamento(1112,3,1,1,false, new DtDireccion(depa->getNombre(),"Iturria",1115),35,35,105), new KeyInt(1112));
+    Apartamento *apto = dynamic_cast<Apartamento*> (propiedades->find(new KeyInt(1111)));
+    Inmobiliaria* inmo1 = dynamic_cast<Inmobiliaria*> (iUsuario->getListaUsuarios()->find(new KeyString("inm1@sis.com")));
+    InmoProp* inmoprop = new InmoProp(inmo1);
+    apto->setInmoProp(inmoprop);
+    apto = dynamic_cast<Apartamento*> (propiedades->find(new KeyInt(1112)));
+    InmoProp* inmoprop0 = new InmoProp(inmo1);
+    apto->setInmoProp(inmoprop0);
+    Casa* casa = dynamic_cast<Casa*> (propiedades->find(new KeyInt(2113)));
+    Inmobiliaria* inmo2 = dynamic_cast<Inmobiliaria*> (iUsuario->getListaUsuarios()->find(new KeyString("inm2@sis.com")));
+    InmoProp* inmoprop1 = new InmoProp(inmo2);
+    casa->setInmoProp(inmoprop1);
+    Inmobiliaria* inmo4 = dynamic_cast<Inmobiliaria*> (iUsuario->getListaUsuarios()->find(new KeyString("inm4@sis.com")));
+    InmoProp* inmoprop2 = new InmoProp(inmo4);
+    casa = dynamic_cast<Casa*> (propiedades->find(new KeyInt(2115)));
+    casa->setInmoProp(inmoprop2);
+    Inmobiliaria* inmo3 = dynamic_cast<Inmobiliaria*> (iUsuario->getListaUsuarios()->find(new KeyString("inm3@sis.com")));
+    //InmoProp* inmoprop = new InmoProp(inmo3);
+    Zona* zon2 = dynamic_cast <Zona*> (listaaux->find(new KeyInt(102)));
+    IDictionary* propiedades2 = zon2->getPropiedades();
+    propiedades2->add(new Casa(2114,6,3,2,true, new DtDireccion(depa->getNombre(),"Juanico",456),34,34,0), new KeyInt(2114));
+    propiedades2->add(new Apartamento(1113,2,1,1,true, new DtDireccion(depa->getNombre(),"Callejon",456),45,45,01), new KeyInt(1113));
+    apto = dynamic_cast<Apartamento*> (propiedades2->find(new KeyInt(1113)));
+    InmoProp* inmoprop3 = new InmoProp(inmo2);
+    apto->setInmoProp(inmoprop3);
+    casa = dynamic_cast<Casa*> (propiedades2->find(new KeyInt(2114)));
+    InmoProp* inmoprop4 = new InmoProp(inmo3);
+    casa->setInmoProp(inmoprop4);
+    //Departamento* depb = dynamic_cast<Departamento*> (departamentos->find(new KeyString("B")));
+    //Departamento* depd = dynamic_cast<Departamento*> (departamentos->find(new KeyString("D")));
+    Zona *zon3 = dynamic_cast<Zona*> (depb->getZonas()->find(new KeyInt(103)));
+    Zona* zon4 = dynamic_cast<Zona*> (depd->getZonas()->find(new KeyInt(104)));
+    Zona* zon5 = dynamic_cast<Zona*> (depd->getZonas()->find(new KeyInt(105)));
+    zon3->getPropiedades()->add(new Apartamento(1114,7,3,2,true, new DtDireccion(depb->getNombre(),"CORCEGA",3456),34,34,02), new KeyInt(1114));
+    apto = dynamic_cast<Apartamento*> (zon3->getPropiedades()->find(new KeyInt(1114)));
+    InmoProp* inmoprop5 = new InmoProp(inmo2);
+    apto->setInmoProp(inmoprop5);
+    zon4->getPropiedades()->add(new Apartamento(1115,4,1,1,false, new DtDireccion(depd->getNombre(),"LUCRECIA",456),25,25,3), new KeyInt(1115));
+    zon4->getPropiedades()->add(new Apartamento(1116,2,1,1,false, new DtDireccion(depd->getNombre(),"LUCRECIA",456),17,17,3), new KeyInt(1116));
+    zon4->getPropiedades()->add(new Casa(2112,2,1,1,false, new DtDireccion(depd->getNombre(),"Gloria",345),35,55,20), new KeyInt(2112));
+    zon5->getPropiedades()->add(new Casa(2111,12,5,1,true, new DtDireccion(depd->getNombre(),"Chana",2345),34,44,10), new KeyInt(2111));
+    apto = dynamic_cast<Apartamento*> (zon4->getPropiedades()->find(new KeyInt(1115)));
+    InmoProp* inmoprop6 = new InmoProp(inmo3);
+    apto->setInmoProp(inmoprop6);
+    apto = dynamic_cast<Apartamento*> (zon4->getPropiedades()->find(new KeyInt(1116)));
+    InmoProp* inmoprop7 = new InmoProp(inmo4);
+    apto->setInmoProp(inmoprop7);
+    casa = dynamic_cast<Casa*> (zon4->getPropiedades()->find(new KeyInt(2112)));
+    InmoProp* inmoprop8 = new InmoProp(inmo1);
+    casa->setInmoProp(inmoprop8);
+    casa = dynamic_cast<Casa*> (zon5->getPropiedades()->find(new KeyInt(2111)));
+    InmoProp* inmoprop9 = new InmoProp(inmo1);
+    casa->setInmoProp(inmoprop9);
+    Apartamento *apto1;
+    Apartamento *apto2;
+    Apartamento *apto3; 
+    Apartamento *apto4;
+    Apartamento *apto5;
+    Apartamento *apto6;
+    Casa *casa1;
+    Casa *casa2;
+    Casa *casa3;
+    Casa *casa4;
+    Casa *casa5;
+    apto1 = dynamic_cast<Apartamento*> (zon1->getPropiedades()->find(new KeyInt(1111)));
+    apto2 = dynamic_cast<Apartamento*> (zon1->getPropiedades()->find(new KeyInt(1112)));
+    apto3 = dynamic_cast<Apartamento*> (zon2->getPropiedades()->find(new KeyInt(1113)));
+    apto4 = dynamic_cast<Apartamento*> (zon3->getPropiedades()->find(new KeyInt(1114)));
+    apto5 = dynamic_cast<Apartamento*> (zon4->getPropiedades()->find(new KeyInt(1115)));
+    apto6 = dynamic_cast<Apartamento*> (zon4->getPropiedades()->find(new KeyInt(1116)));
+    casa1 = dynamic_cast<Casa*> (zon5->getPropiedades()->find(new KeyInt(2111)));
+    casa2 = dynamic_cast<Casa*> (zon4->getPropiedades()->find(new KeyInt(2112)));
+    casa3 = dynamic_cast<Casa*> (zon1->getPropiedades()->find(new KeyInt(2113)));
+    casa4 = dynamic_cast<Casa*> (zon2->getPropiedades()->find(new KeyInt(2114)));
+    casa5 = dynamic_cast<Casa*> (zon1->getPropiedades()->find(new KeyInt(2115)));
+    apto1->getInmoProp()->getAvisos()->add(new Venta(34567));
+    apto2->getInmoProp()->getAvisos()->add(new Venta(65789));
+    apto3->getInmoProp()->getAvisos()->add(new Alquiler(7689));
+    apto4->getInmoProp()->getAvisos()->add(new Alquiler(6789));
+    apto5->getInmoProp()->getAvisos()->add(new Alquiler(7890));
+    apto6->getInmoProp()->getAvisos()->add(new Alquiler(768));
+    casa1->getInmoProp()->getAvisos()->add(new Venta(45000));
+    casa2->getInmoProp()->getAvisos()->add(new Venta(34560));
+    casa3->getInmoProp()->getAvisos()->add(new Venta(13000));
+    casa4->getInmoProp()->getAvisos()->add(new Alquiler(20000));
+    casa5->getInmoProp()->getAvisos()->add(new Alquiler(56789));
+    Edificio* ed1 = dynamic_cast<Edificio*> (edificios->find(new KeyString("Apache Valiente")));
+    Edificio* ed2 = dynamic_cast<Edificio*> (edificios->find(new KeyString("Mebeo")));
+    Edificio* ed3 = dynamic_cast<Edificio*> (edificios->find(new KeyString("Socrates")));
+    Edificio* ed4 = dynamic_cast<Edificio*> (edificios->find(new KeyString("El Burdel")));
+    ed1->agregarApto(apto1);
+    ed1->agregarApto(apto2);
+    ed2->agregarApto(apto3);
+    ed3->agregarApto(apto4);
+    ed4->agregarApto(apto5);
+    ed4->agregarApto(apto6);
+    Usuario* interesado4 = dynamic_cast<Usuario*> (iUsuario->getListaUsuarios()->find(new KeyString("int4@sis.com")));
+    Usuario* interesado1 = dynamic_cast<Usuario*> (iUsuario->getListaUsuarios()->find(new KeyString("int1@sis.com")));
+    Usuario* interesado2 = dynamic_cast<Usuario*> (iUsuario->getListaUsuarios()->find(new KeyString("int2@sis.com")));
+    Usuario* interesado3 = dynamic_cast<Usuario*> (iUsuario->getListaUsuarios()->find(new KeyString("int3@sis.com")));
+    Usuario* interesado5 = dynamic_cast<Usuario*> (iUsuario->getListaUsuarios()->find(new KeyString("Int5.com")));
+    apto1->getInmoProp()->ingresarMensaje("Quiero hacer una oferta ya!","Venta",interesado4, new DtFecha(1,6,2016), new DtHora(30,0));
+    apto2->getInmoProp()->ingresarMensaje("Tiene humedad?","Venta",interesado1, new DtFecha(2,6,2016), new DtHora(45,12));
+    apto3->getInmoProp()->ingresarMensaje("Cual es el precio?","Alquiler",interesado5, new DtFecha(3,6,2016), new DtHora(05,2));
+    casa1->getInmoProp()->ingresarMensaje("Estoy Interesado","Venta",interesado1, new DtFecha(25,05,2016), new DtHora(02,13));
+    casa1->getInmoProp()->ingresarMensaje("PERDON ME EQUIVOQUE","Venta",interesado3, new DtFecha(23,05,2016), new DtHora(35,12));
+    casa4->getInmoProp()->ingresarMensaje("Cuanto cuesta?","Alquiler",interesado2, new DtFecha(24,05,2016),new DtHora(30,12));
+    
+}
+
+---Aviso.cpp:
+
+void Aviso::ingresarMensaje(string texto, Usuario* usuario, DtFecha* dtf, DtHora* dth) {
+    //int codigo = -1;
+    string codigo = "hola";
+    IIterator* iterator = this->chats->iterator();
+    while (iterator->hasNext()) {
+        Chat* c = dynamic_cast<Chat*> (iterator->getCurrent());
+        codigo = c->getInteresado()->getCorreo();
+        //codigo = c->getCodigoInter();
+
+        //if (codigo == usuario->getCodigo())
+        if (codigo == usuario->getCorreo())
+            c->ingresarMensaje(texto, dtf, dth);
+        else
+            codigo = "hola";
+
+        iterator->next();
+    }
+
+    delete iterator;
+    
+    //if (codigo == -1) {
+    if (codigo == "hola") {
+        Chat* c = new Chat(dynamic_cast<Interesado*> (usuario));
+        c->ingresarMensaje(texto, dtf, dth);
+        this->chats->add(c);
+    }
+}
+
+---Inmobiliaria.cpp
+
+Inmobiliaria::Inmobiliaria(string email,string nombre,string pass,DtDireccion* dir)
+    :Usuario(email, pass){
+    this->nombre = nombre;
+    this->direccion = dir;
+}
+
+---Interesado.cpp
+
+Interesado::Interesado(string email, int edad, string nombre, string apellido, string pass)
+:Usuario(email, pass){
+    this->nombre = nombre;
+    this->edad = edad;
+    this->apellido = apellido;
+}
+
